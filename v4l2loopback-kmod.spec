@@ -8,7 +8,7 @@
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
 Version:        0.12.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2+
 
 URL:            https://github.com/umlaeute/v4l2loopback
@@ -66,6 +66,9 @@ done
 
 
 %changelog
+* Tue Feb 23 2021 Nicolas Chauvet <kwizart@gmail.com> - 0.12.5-3
+- Bump spec
+
 * Mon Feb 15 2021 Nicolas Chauvet <kwizart@gmail.com> - 0.12.5-2
 - Rework spec file
 
