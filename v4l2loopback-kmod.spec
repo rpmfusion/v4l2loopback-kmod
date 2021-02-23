@@ -1,5 +1,5 @@
 %if 0%{?fedora}
-#global buildforkernels akmod
+%global buildforkernels akmod
 %global debug_package %{nil}
 %endif
 
