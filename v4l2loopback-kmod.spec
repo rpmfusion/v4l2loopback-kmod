@@ -16,6 +16,8 @@ Source0:        %{url}/archive/v%{version}/%{prjname}-%{version}.tar.gz
 # Submitted upstream: https://github.com/umlaeute/v4l2loopback/pull/389
 Patch0:         v4l2loopback-0.12.3-Include-header-outside-of-struct-definition.patch
 
+BuildRequires:  gcc
+BuildRequires:  elfutils-libelf-devel
 BuildRequires:  kmodtool
 %{!?kernels:BuildRequires: buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
 
