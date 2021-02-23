@@ -1,5 +1,5 @@
 %if 0%{?fedora}
-%global buildforkernels akmod
+#global buildforkernels akmod
 %global debug_package %{nil}
 %endif
 
@@ -8,7 +8,7 @@
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
 Version:        0.12.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2+
 
 URL:            https://github.com/umlaeute/v4l2loopback
@@ -17,7 +17,7 @@ Source0:        %{url}/archive/v%{version}/%{prjname}-%{version}.tar.gz
 Patch0:         v4l2loopback-0.12.3-Include-header-outside-of-struct-definition.patch
 
 BuildRequires:  kmodtool
-%{!?kernels:BuildRequires: gcc, elfutils-libelf-devel, buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
+%{!?kernels:BuildRequires: buildsys-build-rpmfusion-kerneldevpkgs-%{?buildforkernels:%{buildforkernels}}%{!?buildforkernels:current}-%{_target_cpu} }
 
 # kmodtool does its magic here
 %{expand:%(kmodtool --target %{_target_cpu} --repo rpmfusion --kmodname %{prjname} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null) }
@@ -38,11 +38,13 @@ This package contains the kmod module for %{prjname}.
 # print kmodtool output for debugging purposes:
 kmodtool  --target %{_target_cpu} --repo rpmfusion --kmodname %{prjname} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null
 
-%autosetup -n %{prjname}-%{version} -p1
+%setup -q -c
+(cd v4l2loopback-%{version}
+%patch0 -p1
+)
 
 for kernel_version  in %{?kernel_versions} ; do
-  mkdir -p _kmod_build_${kernel_version%%___*}
-  cp -a . _kmod_build_${kernel_version%%___*}
+  cp -a v4l2loopback-%{version} _kmod_build_${kernel_version%%___*}
 done
 
 
@@ -55,12 +57,15 @@ done
 %install
 for kernel_version in %{?kernel_versions}; do
  mkdir -p %{buildroot}%{kmodinstdir_prefix}/${kernel_version%%___*}/%{kmodinstdir_postfix}/
- install -D -m 755 -t %{buildroot}%{kmodinstdir_prefix}/${kernel_version%%___*}/%{kmodinstdir_postfix}/ $(find _kmod_build_${kernel_version%%___*}/ -name '*.ko')
- chmod u+x %{buildroot}%{_prefix}/lib/modules/*/extra/*/*
+ install -D -m 755 _kmod_build_${kernel_version%%___*}/v4l2loopback.ko %{buildroot}%{kmodinstdir_prefix}/${kernel_version%%___*}/%{kmodinstdir_postfix}/
+ chmod a+x %{buildroot}/lib/modules/${kernel_version%%___*}/%{kmodinstdir_postfix}/*.ko
 done
 %{?akmod_install}
 
 
 %changelog
+* Mon Feb 15 2021 Nicolas Chauvet <kwizart@gmail.com> - 0.12.5-2
+- Rework spec file
+
 * Sat Dec 26 2020 Neal Gompa <ngompa13@gmail.com> - 0.12.5-1
 - Initial packaging
