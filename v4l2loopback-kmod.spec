@@ -22,6 +22,17 @@ Source0:        %{url}/archive/v%{version}/%{prjname}-%{version}.tar.gz
 # Submitted upstream: https://github.com/umlaeute/v4l2loopback/pull/389
 Patch0:         v4l2loopback-0.12.3-Include-header-outside-of-struct-definition.patch
 
+# These two patches are from ubuntu and is used to usage count to the
+# application. This is important for IPU6 v4l2loopback solution since
+# the application opens v4l2loopback rather than an IPU6 device. The
+# streaming relay application needs this information to determine whether
+# to continue or stop the video streaming from IPU6.
+
+# https://git.launchpad.net/ubuntu/+source/v4l2loopback/patch/?id=abe07ef8c714e28cca05cd704fecd1fb68c47bae
+patch1:         0001-UBUNTU-SAUCE-track-active-readers.patch
+# https://git.launchpad.net/ubuntu/+source/v4l2loopback/patch/?id=077e0aa50d3dfffc18731740068e8e59e30c6fc8
+patch2:         0002-UBUNTU-SAUCE-event-support-V4L2_EVENT_PRI_CLIENT_USA.patch
+
 BuildRequires:  gcc
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  kmodtool
@@ -49,6 +60,8 @@ kmodtool  --target %{_target_cpu} --repo rpmfusion --kmodname %{prjname} %{?buil
 %setup -q -c
 (cd v4l2loopback-%{version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 )
 
 for kernel_version  in %{?kernel_versions} ; do
@@ -72,6 +85,9 @@ done
 
 
 %changelog
+*Tue Dec 13 2022 Kate Hsuan <hpa@redhat.com> - 0.12.7-3
+- Add usage event
+
 * Mon Aug 08 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.12.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
   5.1
