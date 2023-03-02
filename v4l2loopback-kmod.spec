@@ -9,18 +9,20 @@
 %endif
 %global debug_package %{nil}
 
+%global commit a66968647843f57448b59cf98d0318f1e98e072c
+%global commitdate 20230220
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 %global prjname v4l2loopback
 
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
-Version:        0.12.7
-Release:        2%{?dist}
+Version:        0.12.7^%{commitdate}g%{shortcommit}
+Release:        1%{?dist}
 License:        GPLv2+
 
 URL:            https://github.com/umlaeute/v4l2loopback
-Source0:        %{url}/archive/v%{version}/%{prjname}-%{version}.tar.gz
-# Submitted upstream: https://github.com/umlaeute/v4l2loopback/pull/389
-Patch0:         v4l2loopback-0.12.3-Include-header-outside-of-struct-definition.patch
+Source0:        %{url}/archive/%{commit}/%{prjname}-%{shortcommit}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  elfutils-libelf-devel
@@ -47,12 +49,8 @@ This package contains the kmod module for %{prjname}.
 kmodtool  --target %{_target_cpu} --repo rpmfusion --kmodname %{prjname} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null
 
 %setup -q -c
-(cd v4l2loopback-%{version}
-%patch0 -p1
-)
-
 for kernel_version  in %{?kernel_versions} ; do
-  cp -a v4l2loopback-%{version} _kmod_build_${kernel_version%%___*}
+  cp -a v4l2loopback-%{commit} _kmod_build_${kernel_version%%___*}
 done
 
 
@@ -72,6 +70,9 @@ done
 
 
 %changelog
+* Thu Mar 02 2023 Kate Hsuan <hpa@redhat.com> - 0.12.7-20230220ga669686-1
+- Updated to commit a66968647843f57448b59cf98d0318f1e98e072c
+
 * Mon Aug 08 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.12.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
   5.1
