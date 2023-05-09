@@ -9,8 +9,8 @@
 %endif
 %global debug_package %{nil}
 
-%global commit a66968647843f57448b59cf98d0318f1e98e072c
-%global commitdate 20230220
+%global commit 2c9b67072b15d903fecde67c7f269abeafee4c25
+%global commitdate 20230503
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global prjname v4l2loopback
@@ -23,6 +23,8 @@ License:        GPLv2+
 
 URL:            https://github.com/umlaeute/v4l2loopback
 Source0:        %{url}/archive/%{commit}/%{prjname}-%{shortcommit}.tar.gz
+
+Patch0:         0001-v4l2loopback-Fixup-bytesused-field-when-writer-sends.patch
 
 BuildRequires:  gcc
 BuildRequires:  elfutils-libelf-devel
@@ -49,6 +51,10 @@ This package contains the kmod module for %{prjname}.
 kmodtool  --target %{_target_cpu} --repo rpmfusion --kmodname %{prjname} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null
 
 %setup -q -c
+(cd v4l2loopback-%{commit}
+%patch0 -p1
+)
+
 for kernel_version  in %{?kernel_versions} ; do
   cp -a v4l2loopback-%{commit} _kmod_build_${kernel_version%%___*}
 done
@@ -70,6 +76,10 @@ done
 
 
 %changelog
+* Tue May 09 2023 Kate Hsuan <hpa@redhat.com> - 0.12.7-20230503g2c9b670-1
+- Updated to commit 2c9b67072b15d903fecde67c7f269abeafee4c25 
+- The patch is used to prevent the value of byteused field becomes too large
+
 * Thu Mar 02 2023 Kate Hsuan <hpa@redhat.com> - 0.12.7-20230220ga669686-1
 - Updated to commit a66968647843f57448b59cf98d0318f1e98e072c
 
