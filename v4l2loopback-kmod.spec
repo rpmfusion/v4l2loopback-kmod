@@ -18,7 +18,7 @@
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
 Version:        0.12.7^%{commitdate}g%{shortcommit}
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2+
 
 URL:            https://github.com/umlaeute/v4l2loopback
@@ -52,7 +52,7 @@ kmodtool  --target %{_target_cpu} --repo rpmfusion --kmodname %{prjname} %{?buil
 
 %setup -q -c
 (cd v4l2loopback-%{commit}
-%patch0 -p1
+%patch -P 0 -p1
 )
 
 for kernel_version  in %{?kernel_versions} ; do
@@ -76,6 +76,9 @@ done
 
 
 %changelog
+* Fri Nov 24 2023 Nicolas Chauvet <kwizart@gmail.com> - 0.12.7^20230503g2c9b670-3
+- Rebuilt
+
 * Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.12.7^20230503g2c9b670-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
 
