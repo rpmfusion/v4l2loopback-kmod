@@ -17,14 +17,12 @@
 
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
-Version:        0.12.7^%{commitdate}g%{shortcommit}
+Version:        0.13.1
 Release:        1%{?dist}
 License:        GPLv2+
 
 URL:            https://github.com/umlaeute/v4l2loopback
-Source0:        %{url}/archive/%{commit}/%{prjname}-%{shortcommit}.tar.gz
-
-Patch0:         0001-v4l2loopback-Fixup-bytesused-field-when-writer-sends.patch
+Source0:        %{url}/archive/v%{version}/%{prjname}-%{version}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  elfutils-libelf-devel
@@ -51,12 +49,12 @@ This package contains the kmod module for %{prjname}.
 kmodtool  --target %{_target_cpu} --repo rpmfusion --kmodname %{prjname} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null
 
 %setup -q -c
-(cd v4l2loopback-%{commit}
-%patch0 -p1
+(cd v4l2loopback-%{version}
+#patch -P 0 -p1
 )
 
 for kernel_version  in %{?kernel_versions} ; do
-  cp -a v4l2loopback-%{commit} _kmod_build_${kernel_version%%___*}
+  cp -a v4l2loopback-%{version} _kmod_build_${kernel_version%%___*}
 done
 
 
@@ -76,6 +74,18 @@ done
 
 
 %changelog
+* Thu Mar 21 2024 Leigh Scott <leigh123linux@gmail.com> - 0.13.1-1
+- Update to 0.13.1
+
+* Sun Feb 04 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.12.7^20230503g2c9b670-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
+
+* Fri Nov 24 2023 Nicolas Chauvet <kwizart@gmail.com> - 0.12.7^20230503g2c9b670-3
+- Rebuilt
+
+* Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.12.7^20230503g2c9b670-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
+
 * Tue May 09 2023 Kate Hsuan <hpa@redhat.com> - 0.12.7-20230503g2c9b670-1
 - Updated to commit 2c9b67072b15d903fecde67c7f269abeafee4c25 
 - The patch is used to prevent the value of byteused field becomes too large
