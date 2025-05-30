@@ -17,7 +17,7 @@
 
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
-Version:        0.14.0
+Version:        0.15.0
 Release:        1%{?dist}
 License:        GPLv2+
 
@@ -74,6 +74,9 @@ done
 
 
 %changelog
+* Fri May 30 2025 Leigh Scott <leigh123linux@gmail.com> - 0.15.0-1
+- Update to 0.15.0
+
 * Sun Mar 09 2025 Leigh Scott <leigh123linux@gmail.com> - 0.14.0-1
 - Update to 0.14.0
 
