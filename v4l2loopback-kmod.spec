@@ -17,9 +17,9 @@
 
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
-Version:        0.15.0
+Version:        0.15.1
 Release:        1%{?dist}
-License:        GPLv2+
+License:        GPL-2.0-or-later
 
 URL:            https://github.com/umlaeute/v4l2loopback
 Source0:        %{url}/archive/v%{version}/%{prjname}-%{version}.tar.gz
@@ -74,6 +74,9 @@ done
 
 
 %changelog
+* Tue Jul 22 2025 Leigh Scott <leigh123linux@gmail.com> - 0.15.1-1
+- Update to 0.15.1
+
 * Fri May 30 2025 Leigh Scott <leigh123linux@gmail.com> - 0.15.0-1
 - Update to 0.15.0
 
