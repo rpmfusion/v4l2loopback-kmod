@@ -17,7 +17,7 @@
 
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
-Version:        0.15.2
+Version:        0.15.3
 Release:        1%{?dist}
 License:        GPL-2.0-or-later
 
@@ -74,6 +74,9 @@ done
 
 
 %changelog
+* Sat Dec 20 2025 Leigh Scott <leigh123linux@gmail.com> - 0.15.3-1
+- Update to 0.15.3
+
 * Wed Oct 15 2025 Nicolas Chauvet <kwizart@gmail.com> - 0.15.2-1
 - Update to 0.15.2
 
