@@ -1,12 +1,4 @@
-%if 0%{?fedora}
 %global buildforkernels akmod
-%endif
-%if 0%{?el9}
-# kmod fails on rhel9 kernel with aarch64 - just build an akmod there
-%ifarch aarch64
-%global buildforkernels akmod
-%endif
-%endif
 %global debug_package %{nil}
 
 %global commit 2c9b67072b15d903fecde67c7f269abeafee4c25
@@ -18,7 +10,7 @@
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
 Version:        0.15.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPL-2.0-or-later
 
 URL:            https://github.com/umlaeute/v4l2loopback
@@ -74,6 +66,9 @@ done
 
 
 %changelog
+* Wed Jun 03 2026 Nicolas Chauvet <kwizart@gmail.com> - 0.15.3-3
+- Default to build akmod everywhere
+
 * Mon Feb 02 2026 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.15.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
 
