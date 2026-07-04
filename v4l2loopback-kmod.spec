@@ -9,8 +9,8 @@
 
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
-Version:        0.15.3
-Release:        3%{?dist}
+Version:        0.15.4
+Release:        1%{?dist}
 License:        GPL-2.0-or-later
 
 URL:            https://github.com/umlaeute/v4l2loopback
@@ -66,6 +66,9 @@ done
 
 
 %changelog
+* Sat Jul 04 2026 Leigh Scott <leigh123linux@gmail.com> - 0.15.4-1
+- Update to 0.15.4
+
 * Wed Jun 03 2026 Nicolas Chauvet <kwizart@gmail.com> - 0.15.3-3
 - Default to build akmod everywhere
 
