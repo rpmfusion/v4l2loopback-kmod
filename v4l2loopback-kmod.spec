@@ -10,7 +10,7 @@
 Name:           %{prjname}-kmod
 Summary:        Kernel module (kmod) for %{prjname}
 Version:        0.15.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPL-2.0-or-later
 
 URL:            https://github.com/umlaeute/v4l2loopback
@@ -66,6 +66,9 @@ done
 
 
 %changelog
+* Sun Aug 02 2026 RPM Fusion Release Engineering <leigh123linux@rpmfusion.org> - 0.15.4-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_45_Mass_Rebuild
+
 * Sat Jul 04 2026 Leigh Scott <leigh123linux@gmail.com> - 0.15.4-1
 - Update to 0.15.4
 
